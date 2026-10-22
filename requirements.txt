@@ -1,0 +1,9 @@
+Django>=6.0.9,<6.1
+django-crispy-forms
+crispy-bootstrap5
+django-extensions
+Werkzeug
+pyOpenSSL
+djangorestframework
+requests
+urllib3

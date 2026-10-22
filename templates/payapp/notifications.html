@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}Notifications{% endblock %}
+{% block content %}
+<h1>Notifications</h1>
+
+<h2>New payments received</h2>
+{% if new_payments %}
+  <ul>
+  {% for p in new_payments %}
+    <li>{{ p.sender.username }} sent you {{ p.amount }} {{ p.currency }}
+        on {{ p.timestamp|date:'d/m/Y H:i' }}.</li>
+  {% endfor %}
+  </ul>
+{% else %}<p>Nothing new.</p>{% endif %}
+
+<h2>Pending requests</h2>
+{% if pending %}
+  {% for r in pending %}
+    <div class="card mb-2"><div class="card-body">
+      <p>{{ r.requester.username }} requests {{ r.amount }} {{ r.currency }}
+         (sent {{ r.timestamp|date:'d/m/Y H:i' }}).</p>
+      <form method="post"
+      action="{% url 'respond_to_request' request_id=r.pk %}" class="d-inline">
+        {% csrf_token %}
+        <button name="action" value="accept" class="btn btn-success">Pay</button>
+        <button name="action" value="reject" class="btn btn-outline-danger">Decline</button>
+      </form>
+    </div></div>
+  {% endfor %}
+{% else %}<p>No pending requests.</p>{% endif %}
+{% endblock %}

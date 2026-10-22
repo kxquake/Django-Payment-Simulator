@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block title %}Transactions{% endblock %}
+{% block content %}
+<h1>Your transactions</h1>
+
+<h2>Payments sent</h2>
+{% if payments_out %}
+<table class="table">
+  <tr><th>When</th><th>To</th><th>Amount</th></tr>
+  {% for p in payments_out %}
+    <tr>
+      <td>{{ p.timestamp|date:'d/m/Y H:i' }}</td>
+      <td>{{ p.recipient.username }}</td>
+      <td>{{ p.amount }} {{ p.currency }}</td>
+    </tr>
+  {% endfor %}
+</table>
+{% else %}<p>No outgoing payments.</p>{% endif %}
+
+<h2>Payments received</h2>
+{% if payments_in %}
+<table class="table">
+  <tr><th>When</th><th>From</th><th>Amount</th></tr>
+  {% for p in payments_in %}
+    <tr>
+      <td>{{ p.timestamp|date:'d/m/Y H:i' }}</td>
+      <td>{{ p.sender.username }}</td>
+      <td>{{ p.amount }} {{ p.currency }}</td>
+    </tr>
+  {% endfor %}
+</table>
+{% else %}<p>No incoming payments.</p>{% endif %}
+
+<h2>Requests you made</h2>
+{% if requests_out %}
+<table class="table">
+  <tr><th>When</th><th>To</th><th>Amount</th><th>Status</th></tr>
+  {% for r in requests_out %}
+    <tr>
+      <td>{{ r.timestamp|date:'d/m/Y H:i' }}</td>
+      <td>{{ r.target.username }}</td>
+      <td>{{ r.amount }} {{ r.currency }}</td>
+      <td>{{ r.get_status_display }}</td>
+    </tr>
+  {% endfor %}
+</table>
+{% else %}<p>No outgoing requests.</p>{% endif %}
+
+<h2>Requests of you</h2>
+{% if requests_in %}
+<table class="table">
+  <tr><th>When</th><th>From</th><th>Amount</th><th>Status</th></tr>
+  {% for r in requests_in %}
+    <tr>
+      <td>{{ r.timestamp|date:'d/m/Y H:i' }}</td>
+      <td>{{ r.requester.username }}</td>
+      <td>{{ r.amount }} {{ r.currency }}</td>
+      <td>{{ r.get_status_display }}</td>
+    </tr>
+  {% endfor %}
+</table>
+{% else %}<p>No incoming requests.</p>{% endif %}
+
+
+{% endblock %}

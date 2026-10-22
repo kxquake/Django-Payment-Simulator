@@ -1,0 +1,27 @@
+<nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+  <div class="container">
+    <a class="navbar-brand" href="{% url 'dashboard' %}">webapps2026</a>
+    <ul class="navbar-nav me-auto">
+    {% if user.is_authenticated %}
+      <li class="nav-item"><a class="nav-link" href="{% url 'make_payment' %}">Send money</a></li>
+      <li class="nav-item"><a class="nav-link" href="{% url 'request_payment' %}">Request money</a></li>
+      <li class="nav-item"><a class="nav-link" href="{% url 'transactions' %}">Transactions</a></li>
+      <li class="nav-item"><a class="nav-link" href="{% url 'notifications' %}">Notifications</a></li>
+      {% if user.is_staff %}
+        <li class="nav-item"><a class="nav-link text-warning" href="{% url 'admin_users' %}">Users</a></li>
+        <li class="nav-item"><a class="nav-link text-warning" href="{% url 'admin_transactions' %}">All txns</a></li>
+        <li class="nav-item"><a class="nav-link text-warning" href="{% url 'admin_register' %}">New admin</a></li>
+      {% endif %}
+    {% endif %}
+    </ul>
+    <ul class="navbar-nav">
+    {% if user.is_authenticated %}
+      <li class="nav-item"><span class="navbar-text text-light me-3">{{ user.username }}</span></li>
+      <li class="nav-item"><form method="post" action="{% url 'logout' %}">{% csrf_token %}<button type="submit" class="nav-link btn btn-link">Logout</button></form></li>
+    {% else %}
+      <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+      <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Register</a></li>
+    {% endif %}
+    </ul>
+  </div>
+</nav>

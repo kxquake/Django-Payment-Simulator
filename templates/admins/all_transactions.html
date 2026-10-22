@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}All transactions{% endblock %}
+{% block content %}
+<h1>Every payment</h1>
+<table class="table">
+  <tr><th>When</th><th>From</th><th>To</th><th>Amount</th></tr>
+  {% for p in payments %}
+    <tr>
+      <td>{{ p.timestamp|date:'d/m/Y H:i' }}</td>
+      <td>{{ p.sender.username }}</td><td>{{ p.recipient.username }}</td>
+      <td>{{ p.amount }} {{ p.currency }}</td>
+    </tr>
+  {% endfor %}
+</table>
+<h1>Every request</h1>
+<table class="table">
+  <tr><th>When</th><th>From</th><th>To</th><th>Amount</th><th>Status</th></tr>
+  {% for r in requests %}
+    <tr>
+      <td>{{ r.timestamp|date:'d/m/Y H:i' }}</td>
+      <td>{{ r.requester.username }}</td><td>{{ r.target.username }}</td>
+      <td>{{ r.amount }} {{ r.currency }}</td><td>{{ r.get_status_display }}</td>
+    </tr>
+  {% endfor %}
+</table>
+{% endblock %}

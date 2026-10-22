@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+  <h1>Welcome, {{ user.username }}</h1>
+  <p class="lead">
+    Balance: <strong>{{ account.balance }} {{ account.currency }}</strong>
+  </p>
+
+  <div class="row g-3">
+    <div class="col-md-6 col-lg-3">
+      <a class="btn btn-primary w-100" href="{% url 'make_payment' %}">Send money</a>
+    </div>
+    <div class="col-md-6 col-lg-3">
+      <a class="btn btn-outline-primary w-100" href="{% url 'request_payment' %}">Request money</a>
+    </div>
+    <div class="col-md-6 col-lg-3">
+      <a class="btn btn-outline-primary w-100" href="{% url 'transactions' %}">Transactions</a>
+    </div>
+    <div class="col-md-6 col-lg-3">
+      <a class="btn btn-outline-secondary w-100" href="{% url 'notifications' %}">
+        Notifications {% if unseen_payments or unseen_requests %}
+          <span class="badge bg-danger">{{ unseen_payments|add:unseen_requests }}</span>
+        {% endif %}
+      </a>
+    </div>
+  </div>
+{% endblock %}
